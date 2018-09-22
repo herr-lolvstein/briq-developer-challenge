@@ -2,7 +2,7 @@
 
 *All users with their id, username, balance, the date at which they received Briqs for the last time, the date at which they gave Briqs for the last time
 ~~~~ SQL
-SELECT u.id, u.username, tfrom.max AS lastReceive, tto.max AS lastGive
+SELECT u.id, u.username, u.balance, tfrom.max AS lastReceive, tto.max AS lastGive
 FROM users u
 JOIN
     (SELECT MAX("createdAt"), "userFromId"
