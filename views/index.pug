@@ -1,5 +1,32 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  if msg
+    .error-container
+      h1= msg
+  .container
+    h2 User Interface
+    p The less dynamic API-based single page application ever
+    .block
+      h3 Add a user
+      form(action='/users/' method="POST")
+        input(type="text", name="username")
+        input(type="submit", value="Add")
+    .block
+      h3 Give briqs
+    .block
+      h3 User list
+      .user-list
+        .user
+          div ID
+          div USERNAME
+          div BALANCE
+          div DELETE USER
+          div UPDATE USER
+        each user in users
+          .user
+            div= user.id
+            div= user.username
+            div= user.balance
+            button delete
+            button update
