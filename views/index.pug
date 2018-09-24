@@ -5,15 +5,23 @@ block content
     .error-container
       h1= msg
   .container
-    h2 User Interface
-    p The less dynamic API-based single page application ever
+    h2 Robust User Interface
+    p Paving the future, one briq at a time.
     .block
       h3 Add a user
-      form(action='/users/' method="POST")
-        input(type="text", name="username")
-        input(type="submit", value="Add")
+      div
+        span username:
+        input#add-user(type="text", name="username")
+        button#add ADD USER
     .block
       h3 Give briqs
+      div
+        input#amount(type="number")
+        span Briqs from user ID:
+        input#from(type="number")
+        span To user ID:
+        input#to(type="number")
+        button#give GIVE BRIQS
     .block
       h3 User list
       .user-list
@@ -26,7 +34,7 @@ block content
         each user in users
           .user
             div= user.id
-            div= user.username
-            div= user.balance
-            button delete
-            button update
+            input(type="text", value=user.username, id='u1' + user.id)
+            input(type="number", value=user.balance, id='u2' + user.id)
+            button.update(data-id=user.id) update
+            button.delete(data-id=user.id) delete

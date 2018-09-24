@@ -6,7 +6,7 @@ const { user: User } = require('../models');
 router.get('/', (req, res) => {
   User.findAll()
   .then(users => {
-    res.send(users);
+    res.send(users)
   })
 });
 
@@ -25,7 +25,7 @@ router.put('/:id', (req, res) => {
     {returning: true, where: {id: req.params.id} }
   )
   .then(([ rows, [user] ]) => {
-    res.send(user);
+    res.send(user)
   })
 })
 
@@ -34,8 +34,8 @@ router.delete('/:id', (req, res) => {
   User.destroy({where: { id: req.params.id }})
   .then(rows => {
     if (rows === 1)
-      return res.send('Deleted user!')
-    res.send('User not deleted');
+      return res.send({msg: 'Deleted user!'})
+    res.send({ msg: 'User not deleted'})
   })
 })
 
@@ -47,9 +47,10 @@ router.post('/:id/give', (req, res) => {
     ])
     .then(users => {
       users[0].give(req.body.amount, users[1])
+      return users
     })
-    .then(() =>  res.send('Transaction registered'))
-    .catch(err => res.send(err))
+    .then(() =>  res.send({msg: 'Transaction registered'}))
+    .catch(err => res.send({msg: 'Transaction error'}))
 })
 
 module.exports = router;
