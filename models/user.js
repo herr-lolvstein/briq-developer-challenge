@@ -16,12 +16,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     balance: {
       type: DataTypes.INTEGER,
-      defaultValue: 0
+      defaultValue: 0,
+      validate: {
+        min: 0
+      }
     }
   });
 
   User.prototype.give = function (amount, userTo, options = {}) {
     const tx = _.defaults({ amount, userToId: userTo.id }, options);
+
+    if (amount > this.balance)
+      return Promise.reject(new Error("Insufficient funds!"));
+
     return this.createDebit(tx)
       .then(() => this.decrement({ balance: amount }))
       .then(() => userTo.increment({ balance: amount }));
